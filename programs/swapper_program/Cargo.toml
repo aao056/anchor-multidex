@@ -1,0 +1,23 @@
+[package]
+name = "swapper_program"
+version = "0.1.0"
+description = "Created with Anchor"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "swapper_program"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+
+[dependencies]
+anchor-lang = "0.31.0"
+anchor-spl = "0.31.0"
+bytemuck = { version = "1.13.1", features = ["derive", "min_const_generics"] }
+raydium-amm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-amm-cpi", branch = "anchor-0.31.0" }
