@@ -1,4 +1,5 @@
 use crate::context::UnifiedSwap;
+use crate::errors::SwapError;
 use anchor_lang::prelude::*;
 use anchor_spl::token::Token;
 use anchor_spl::token::TokenAccount;
@@ -93,7 +94,8 @@ pub fn swap_base_in(
     amount_in: u64,
     minimum_amount_out: u64,
 ) -> Result<(TokenAccount, u64, TokenAccount, u64)> {
-    raydium_amm_cpi::swap_base_in(ctx.accounts.into(), amount_in, minimum_amount_out);
+    raydium_amm_cpi::swap_base_in(ctx.accounts.into(), amount_in, minimum_amount_out)
+        .map_err(|_| SwapError::MeteoraSwapFailed)?;
 
     let source_account_data = &ctx.accounts.user_token_source.data.borrow();
     let source_account = TokenAccount::try_deserialize(&mut source_account_data.as_ref())?;
