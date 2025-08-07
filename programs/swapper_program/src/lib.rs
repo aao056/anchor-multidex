@@ -14,12 +14,16 @@ use instructions::raydium_swap::swap_base_in;
 use utils::evaluate_swap_outcome;
 
 declare_program!(dlmm);
-declare_id!("HoM7zCZbeC5gAuu8p86t9GCjFocGqgfySD8xu43vMW1J");
+declare_id!("Eb4cZF6UHzbEPtrvsMVAj2WezRJCvmxxTqMXGjdRGbVR");
 
 #[program]
 pub mod swapper_program {
     use super::*;
 
+    pub fn intiialize(_ctx: Context<Init>) -> Result<()> {
+        // Dummy init function - no state to initialize yet
+        Ok(())
+    }
     pub fn execute_swap<'info>(
         ctx: Context<'_, '_, '_, 'info, UnifiedSwap<'info>>,
         amount_in: u64,
@@ -116,4 +120,7 @@ pub mod swapper_program {
         // Return error if no supported swap route was found for the token pair and amounts
         Err(SwapError::UnsupportedTokenPairr.into())
     }
+
+    #[derive(Accounts)]
+    pub struct Init {}
 }
